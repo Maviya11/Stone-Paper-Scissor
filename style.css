@@ -1,0 +1,28 @@
+/* *{
+  margin: 0px;
+  padding: 0px;
+} */
+h2{
+  text-align: center;
+}
+#buttons-div{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+#display-div{
+  display: flex;
+  justify-content: center;
+}
+#result-div{
+  width: 250px;
+}
+#score-div{
+  width: 100px;
+}
+#lastButton{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 10px;
+}

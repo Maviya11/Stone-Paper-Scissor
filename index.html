@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h2>Stone&nbsp Paper &nbspScissor</h2>
+  <div id="buttons-div">
+
+    <button onclick="
+
+      myChoice=`Stone`;
+
+      computerChoice = generateComputerChoice(); //generates computerChoice
+
+
+      // Result
+      result=generateResult();
+
+      scoreDisplay();   
+      finalMsg();
+      ">Stone
+    </button>
+
+
+    <button onclick="
+    
+      myChoice=`Paper`;
+
+      computerChoice = generateComputerChoice();//Generates computerChoice
+
+      // Result
+      result=generateResult();
+
+
+      scoreDisplay();
+
+      finalMsg();
+      
+      ">Paper
+    </button>
+
+
+    <button onclick="
+
+      myChoice=`Scissor`;
+
+      computerChoice = generateComputerChoice();//Generates computerChoice  
+
+
+      // Result
+      result=generateResult();
+
+
+      scoreDisplay();
+    // console.log(score.wins);``
+      finalMsg();
+
+      ">Scissor
+    </button>
+
+
+  </div>
+
+
+  <!--  -->
+  <div id="display-div">
+    <div id="result-div">
+      <h3 id="you">Your Choice: </h3>
+      <h3 id="comp">Computer's Choice: </h3>
+      <h3 id="final">Result: </h3>
+    </div>
+    <div id="score-div">
+      <h3 id="win">Wins: 0</h3>
+      <h3 id="lost">Losts: 0</h3>
+      <h3 id="tie">Tie: 0</h3>
+    </div>
+  </div>
+
+  <div id="lastButton">
+
+    <button id="load-game" onclick="
+      
+      loadGame();
+
+      ">
+      Load Game
+    </button>
+
+    <button onclick="localStorage.clear();
+
+      score = {
+          wins: 0,
+          losts: 0,
+          tie: 0,
+        }
+
+        resetDisplay();
+
+      ">Reset
+    </button>
+
+  </div>
+
+  <script>
+    let myChoice;
+    let result;
+    let number;
+    let computerChoice;
+    let scoreStr;
+
+    let score = {
+      wins: 0,
+      losts: 0,
+      tie: 0,
+    }
+
+
+
+
+    function generateComputerChoice() { //Generates Computer Choice
+      number = Math.random() * 3;
+      if (number > 0 && number <= 1) {
+        return `Stone`;
+      } else if (number <= 2) {
+        return `Paper`;
+      } else {
+        return `Scissor`;
+      }
+    }
+    
+
+    function generateResult() {  //Generates Result
+      if (myChoice === `Stone`) {
+        if (computerChoice === `Stone`) {
+          score.tie++;
+          return `Game Tie`;
+        } else if (computerChoice === `Paper`) {
+          score.losts++;
+          return `You Lost`;
+        } else if (computerChoice === `Scissor`) {
+          score.wins++;
+          return `You Won`;
+        }
+      } else if (myChoice === `Paper`) {
+        if (computerChoice === `Stone`) {
+          score.wins++;
+          return `You Won`;
+        } else if (computerChoice === `Paper`) {
+          score.tie++;
+          return `Game Tie `;
+        } else if (computerChoice === `Scissor`) {
+          score.losts++;
+          return `You Lost`;
+        }
+      } else {
+        if (computerChoice === `Stone`) {
+          score.losts++;
+          return `You Lost`;
+        } else if (computerChoice === `Paper`) {
+          score.wins++;
+          return `You Won `;
+        } else if (computerChoice === `Scissor`) {
+          score.tie++;
+          return `Game Tie`;
+        }
+      }
+    }
+
+
+    function loadGame() {
+      scoreStr = localStorage.getItem('Score')
+      if (scoreStr !== undefined && scoreStr!==null) {
+        score = JSON.parse(scoreStr);
+      } else {
+        score = {
+          wins: 0,
+          losts: 0,
+          tie: 0,
+        }
+      }
+      document.querySelector('#win').innerText = `Wins: ${score.wins}`;
+      document.querySelector('#lost').innerText = `Losts: ${score.losts}`;
+      document.querySelector('#tie').innerText = `Tie: ${score.tie}`;
+    };
+
+    function scoreDisplay() {
+      if (result === `You Won`) {
+        document.querySelector('#win').innerText = `Wins: ${score.wins}`;
+      } else if (result === `You Lost`) {
+        document.querySelector('#lost').innerText = `Losts: ${score.losts}`;
+      } else {
+        document.querySelector('#tie').innerText = `Tie: ${score.tie}`;
+      }
+    }
+
+
+    function finalMsg() { //Displays Message
+      document.querySelector('#you').innerText = `Your Choice: ${myChoice}`;
+      document.querySelector('#comp').innerText = `Computer's Choice: ${computerChoice}`;
+      document.querySelector('#final').innerText = `Result: ${result}`;
+      localStorage.setItem('Score', JSON.stringify(score));
+    }
+
+
+    function resetDisplay() {
+      document.querySelector('#tie').innerText = `Tie: ${score.tie}`;
+      document.querySelector('#lost').innerText = `Losts: ${score.losts}`;
+      document.querySelector('#win').innerText = `Wins: ${score.wins}`;
+      document.querySelector('#you').innerText = `Your Choice: `;
+      document.querySelector('#comp').innerText = `Computer's Choice: `;
+      document.querySelector('#final').innerText = `Result: `;
+    }
+
+  </script>
+</body>
+
+</html>
